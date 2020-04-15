@@ -10,13 +10,38 @@
 ;; Routes
 
 (def my-global-atom (reagent/atom "without passing value & using global argument"))
-(def my-global-atom2 (reagent/atom "with passing value along with @ & using global argument"))
+(def my-global-atom2 (reagent/atom "with passing refrenced value of the atom"))
+(def atom3 (reagent/atom "with passing atom valueand not the refrenced value"))
 
-(defn with-passing-arg [my-global-atom2]
+(def atom4 (reagent/atom "my value can be changed"))
+
+(defn text-input [value]
+  (js/console.log " text-input rendered")
+  [:input {:type "text"
+           :value @value
+           :on-change #(reset! value (-> % .-target .-value))}])
+
+(defn change-text []
+  (js/console.log " change-text rendered")
+  (fn []
+    [:div
+     [:p "Change the text here: " [text-input atom4]
+      [:p "This is your new text: " @atom4]
+      ]]))
+
+(defn with-passing-atom [value]
+  (js/console.log "with-passing-atom rerendered")
   [:div
-   " MY function type is:- " my-global-atom2]
+   " MY function type is:- " @value]
+  )
+
+(defn with-passing-arg [value]
+  (js/console.log "with-passing-refrenced-value rerendered")
+  [:div
+   " MY function type is:- " value]
   )
 (defn without-passing-arg []
+  (js/console.log "without-passing-arg rerendered")
   [:div
    " MY function type is:- " @my-global-atom]
   )
@@ -35,11 +60,15 @@
 ;; Page components
 
 (defn home-page []
+  (js/console.log "before the anonymous function in home page")
   (fn []
+    (js/console.log "INSIDE the anonymous function in home page")
     [:span.main
      [:h1 "Welcome to single- page-web - app"]
      [with-passing-arg @my-global-atom2]
-     [without-passing-arg ]]))
+     [without-passing-arg ]
+     [with-passing-atom atom3]
+     [ change-text ]]))
 
 
 
