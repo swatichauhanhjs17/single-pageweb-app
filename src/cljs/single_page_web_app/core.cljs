@@ -43,7 +43,7 @@
 (defn without-passing-arg []
   (js/console.log "without-passing-arg rerendered")
   [:div
-   " MY function type is:- " @my-global-atom]
+   " MY function type is:- " @atom4]
   )
 
 (def router
@@ -65,9 +65,9 @@
     (js/console.log "INSIDE the anonymous function in home page")
     [:span.main
      [:h1 "Welcome to single- page-web - app"]
-     [with-passing-arg @my-global-atom2]
+     [with-passing-arg @atom4]
      [without-passing-arg ]
-     [with-passing-atom atom3]
+     [with-passing-atom atom4]
      [ change-text ]]))
 
 
