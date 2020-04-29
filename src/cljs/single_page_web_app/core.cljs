@@ -22,13 +22,14 @@
            :on-change #(reset! value (-> % .-target .-value))}])
 
 (defn change-text []
+  (let [new-atom (reagent/atom "I am the new atom")]
   (js/console.log " change-text rendered")
   (fn []
     [:div
-     [:p "Change the text here: " [text-input atom4]
-      [:p "This is your new text: " @atom4]
+     [:p "Change the text here: " [text-input new-atom]
+      [:p "This is your new text: " @new-atom]
       ]]))
-
+  )
 (defn with-passing-atom [value]
   (js/console.log "with-passing-atom rerendered")
   [:div
@@ -65,7 +66,7 @@
     (js/console.log "INSIDE the anonymous function in home page")
     [:span.main
      [:h1 "Welcome to single- page-web - app"]
-     [with-passing-arg @atom4]
+     [with-passing-arg @atom3]
      [without-passing-arg ]
      [with-passing-atom atom4]
      [ change-text ]]))
